@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 from tkinter.messagebox import *
 
 class MyGUI:
@@ -8,7 +9,7 @@ class MyGUI:
         self.windowHeight = 220 # variable to resize window height
         self.mainWindow.geometry(f"380x{self.windowHeight}+720+50")
         self.mainWindow.title("GPA Calculator")
-        self.gradeValue = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        self.gradeValue = ["", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
         self.frame1 = Frame(self.mainWindow, width=246, height=30, bg="#e47777")
         self.frame1.place(x=20, y=30)
         self.frame2Height = 100 # variable to resize frame2 height
@@ -20,7 +21,7 @@ class MyGUI:
         self.courseLabel = Label(self.frame1, text="Course", font=14, fg="black", bg="#e47777")
         self.courseLabel.place(x=10, y=5)
         self.gradeLabel = Label(self.frame1, text="Grade", font=14, fg="black", bg="#e47777")
-        self.gradeLabel.place(x=110, y=5)
+        self.gradeLabel.place(x=113, y=5)
         self.includeLabel = Label(self.frame1, text="Included", font=14, fg="black", bg="#e47777")
         self.includeLabel.place(x=180, y=5)
         
@@ -37,14 +38,15 @@ class MyGUI:
 
         
         
-        self.course = Entry(self.frame2, width=10, font=14, bg="#f9b5b5", fg="black")
+        self.course = Entry(self.frame2, width=10, bg="#f9b5b5", fg="black")
         self.course.place(x=10, y=5)
-        self.grade = Spinbox(self.frame2, value=self.gradeValue, width=5, bg="#f9b5b5", fg="black")
-        self.grade.place(x=110, y=5)
+        self.grade = ttk.Combobox(self.frame2, values=self.gradeValue, width=3)
+        self.grade.place(x=113, y=5)
+        self.grade.set(self.gradeValue[0])
         self.include=IntVar()
         self.include.set(1)
         self.cb = Checkbutton(self.frame2, width=3, variable=self.include, font=14, bg="#f9b5b5")
-        self.cb.place(x=180, y=5)
+        self.cb.place(x=195, y=5)
         
 
         
@@ -66,7 +68,6 @@ class MyGUI:
         self.frame1.config(bg="#e47777")
         self.frame2.config(bg="#f9b5b5")
         self.course.config(bg="#f9b5b5")
-        self.grade.config(bg="#f9b5b5")
         self.cb.config(bg="#f9b5b5")
         self.courseLabel.config(bg="#e47777")
         self.gradeLabel.config(bg="#e47777")
@@ -74,8 +75,6 @@ class MyGUI:
         
         
         for i in self.courseList:
-            i.config(bg="#f9b5b5")
-        for i in self.gradeList:
             i.config(bg="#f9b5b5")
         for i in self.cbList:
             i.config(bg="#f9b5b5")
@@ -86,7 +85,6 @@ class MyGUI:
         self.frame1.config(bg="#8abd5f")
         self.frame2.config(bg="#bae397")
         self.course.config(bg="#bae397")
-        self.grade.config(bg="#bae397")
         self.cb.config(bg="#bae397")
         self.courseLabel.config(bg="#8abd5f")
         self.gradeLabel.config(bg="#8abd5f")
@@ -94,8 +92,6 @@ class MyGUI:
         
 
         for i in self.courseList:
-            i.config(bg="#bae397")
-        for i in self.gradeList:
             i.config(bg="#bae397")
         for i in self.cbList:
             i.config(bg="#bae397")
@@ -105,7 +101,6 @@ class MyGUI:
         self.frame1.config(bg="#7abdc2")
         self.frame2.config(bg="#bbf0f2")
         self.course.config(bg="#bbf0f2")
-        self.grade.config(bg="#bbf0f2")
         self.cb.config(bg="#bbf0f2")
         self.courseLabel.config(bg="#7abdc2")
         self.gradeLabel.config(bg="#7abdc2")
@@ -113,8 +108,6 @@ class MyGUI:
         
 
         for i in self.courseList:
-            i.config(bg="#bbf0f2")
-        for i in self.gradeList:
             i.config(bg="#bbf0f2")
         for i in self.cbList:
             i.config(bg="#bbf0f2")
@@ -129,25 +122,24 @@ class MyGUI:
             self.mainWindow.geometry(f"380x{self.windowHeight + 25}+720+50")
 
         # add new inputs
-        self.newCourse = Entry(self.frame2, width=10, font=14, fg="black")
+        self.newCourse = Entry(self.frame2, width=10, fg="black")
         self.newCourse.place(x=10, y=self.newPos)
         self.courseList.append(self.newCourse)
         
-        self.newGrade = Spinbox(self.frame2, value=self.gradeValue, width=5, fg="black")
-        self.newGrade.place(x=110, y=self.newPos)
+        self.newGrade = ttk.Combobox(self.frame2, values=self.gradeValue, width=3)
+        self.newGrade.place(x=113, y=self.newPos)
+        self.newGrade.set(self.gradeValue[0])
         self.gradeList.append(self.newGrade)
         
         self.newInclude=IntVar()
         self.newInclude.set(1)
         self.includeList.append(self.newInclude)
         self.newCb = Checkbutton(self.frame2, width=3, variable=self.newInclude, font=14)
-        self.newCb.place(x=180, y=self.newPos)
+        self.newCb.place(x=195, y=self.newPos)
         self.cbList.append(self.newCb)
         
         if self.checkBg == 0:
             for i in self.courseList:
-                i.config(bg="#f9b5b5")
-            for i in self.gradeList:
                 i.config(bg="#f9b5b5")
             for i in self.cbList:
                 i.config(bg="#f9b5b5")
@@ -155,15 +147,11 @@ class MyGUI:
         elif self.checkBg == 1:
             for i in self.courseList:
                 i.config(bg="#bae397")
-            for i in self.gradeList:
-                i.config(bg="#bae397")
             for i in self.cbList:
                 i.config(bg="#bae397")
          
         elif self.checkBg == 2:
             for i in self.courseList:
-                i.config(bg="#bbf0f2")
-            for i in self.gradeList:
                 i.config(bg="#bbf0f2")
             for i in self.cbList:
                 i.config(bg="#bbf0f2")
