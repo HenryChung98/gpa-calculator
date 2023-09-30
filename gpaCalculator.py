@@ -1,0 +1,225 @@
+from tkinter import *
+from tkinter.messagebox import *
+
+class MyGUI:
+
+    def __init__(self):
+        self.mainWindow = Tk()
+        self.windowHeight = 220 # variable to resize window height
+        self.mainWindow.geometry(f"380x{self.windowHeight}+720+50")
+        self.mainWindow.title("GPA Calculator")
+        self.gradeValue = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        self.frame1 = Frame(self.mainWindow, width=246, height=30, bg="#e47777")
+        self.frame1.place(x=20, y=30)
+        self.frame2Height = 100 # variable to resize frame2 height
+        self.frame2 = Frame(self.mainWindow, width=246, height=self.frame2Height, bg="#f9b5b5")
+        self.frame2.place(x=20, y=60)
+        self.frame3 = Frame(self.mainWindow, width=100, height=180)
+        self.frame3.place(x=266, y=30)
+    
+        self.courseLabel = Label(self.frame1, text="Course", font=14, fg="black", bg="#e47777")
+        self.courseLabel.place(x=10, y=5)
+        self.gradeLabel = Label(self.frame1, text="Grade", font=14, fg="black", bg="#e47777")
+        self.gradeLabel.place(x=110, y=5)
+        self.includeLabel = Label(self.frame1, text="Included", font=14, fg="black", bg="#e47777")
+        self.includeLabel.place(x=180, y=5)
+        
+        
+        self.choice=StringVar()
+        self.choice.set("RED")
+        
+        self.rb1=Radiobutton(self.frame3, text="Red", font=14, variable=self.choice, value="RED", command=self.changeBgr)
+        self.rb1.place(x=10, y=70)
+        self.rb2=Radiobutton(self.frame3, text="Green", font=14, variable=self.choice, value="GREEN", command=self.changeBgg)
+        self.rb2.place(x=10, y=100)
+        self.rb3=Radiobutton(self.frame3, text="Blue", font=14, variable=self.choice, value="BLUE", command=self.changeBgb)
+        self.rb3.place(x=10, y=130)
+
+        
+        
+        self.course = Entry(self.frame2, width=10, font=14, bg="#f9b5b5", fg="black")
+        self.course.place(x=10, y=5)
+        self.grade = Spinbox(self.frame2, value=self.gradeValue, width=5, bg="#f9b5b5", fg="black")
+        self.grade.place(x=110, y=5)
+        self.include=IntVar()
+        self.include.set(1)
+        self.cb = Checkbutton(self.frame2, width=3, variable=self.include, font=14, bg="#f9b5b5")
+        self.cb.place(x=180, y=5)
+        
+
+        
+        self.addCourseButton = Button(self.frame3, text="Add Course", font=("Arial", 14), width=7, command=self.addCourse)
+        self.addCourseButton.place(x=10, y=10)
+        self.calculateButton = Button(self.frame3, text="Calculate", font=("Arial", 14), width=7, command=self.calculateGPA)
+        self.calculateButton.place(x=10, y=40)
+        
+        # to give different value to each new inputs
+        self.gradeList = [self.grade]
+        self.includeList = [self.include]
+        self.courseList = [self.course]
+        self.cbList = [self.cb]
+
+        self.newPos = 30 # variable to display new inputs
+        self.checkBg = 0 # check background color
+        
+    def changeBgr(self): # change background red
+        self.frame1.config(bg="#e47777")
+        self.frame2.config(bg="#f9b5b5")
+        self.course.config(bg="#f9b5b5")
+        self.grade.config(bg="#f9b5b5")
+        self.cb.config(bg="#f9b5b5")
+        self.courseLabel.config(bg="#e47777")
+        self.gradeLabel.config(bg="#e47777")
+        self.includeLabel.config(bg="#e47777")
+        
+        
+        for i in self.courseList:
+            i.config(bg="#f9b5b5")
+        for i in self.gradeList:
+            i.config(bg="#f9b5b5")
+        for i in self.cbList:
+            i.config(bg="#f9b5b5")
+        self.checkBg = 0
+        
+        
+    def changeBgg(self): # change background green
+        self.frame1.config(bg="#8abd5f")
+        self.frame2.config(bg="#bae397")
+        self.course.config(bg="#bae397")
+        self.grade.config(bg="#bae397")
+        self.cb.config(bg="#bae397")
+        self.courseLabel.config(bg="#8abd5f")
+        self.gradeLabel.config(bg="#8abd5f")
+        self.includeLabel.config(bg="#8abd5f")
+        
+
+        for i in self.courseList:
+            i.config(bg="#bae397")
+        for i in self.gradeList:
+            i.config(bg="#bae397")
+        for i in self.cbList:
+            i.config(bg="#bae397")
+        self.checkBg = 1
+    
+    def changeBgb(self): # change background blue
+        self.frame1.config(bg="#7abdc2")
+        self.frame2.config(bg="#bbf0f2")
+        self.course.config(bg="#bbf0f2")
+        self.grade.config(bg="#bbf0f2")
+        self.cb.config(bg="#bbf0f2")
+        self.courseLabel.config(bg="#7abdc2")
+        self.gradeLabel.config(bg="#7abdc2")
+        self.includeLabel.config(bg="#7abdc2")
+        
+
+        for i in self.courseList:
+            i.config(bg="#bbf0f2")
+        for i in self.gradeList:
+            i.config(bg="#bbf0f2")
+        for i in self.cbList:
+            i.config(bg="#bbf0f2")
+        self.checkBg = 2
+    
+    def addCourse(self):
+        # to resize frames
+        self.frame2Height += 25
+        if self.frame2Height >= self.windowHeight - 50:
+            self.windowHeight += 25
+            self.frame2.config(height=self.frame2Height - 50)
+            self.mainWindow.geometry(f"380x{self.windowHeight + 25}+720+50")
+
+        # add new inputs
+        self.newCourse = Entry(self.frame2, width=10, font=14, fg="black")
+        self.newCourse.place(x=10, y=self.newPos)
+        self.courseList.append(self.newCourse)
+        
+        self.newGrade = Spinbox(self.frame2, value=self.gradeValue, width=5, fg="black")
+        self.newGrade.place(x=110, y=self.newPos)
+        self.gradeList.append(self.newGrade)
+        
+        self.newInclude=IntVar()
+        self.newInclude.set(1)
+        self.includeList.append(self.newInclude)
+        self.newCb = Checkbutton(self.frame2, width=3, variable=self.newInclude, font=14)
+        self.newCb.place(x=180, y=self.newPos)
+        self.cbList.append(self.newCb)
+        
+        if self.checkBg == 0:
+            for i in self.courseList:
+                i.config(bg="#f9b5b5")
+            for i in self.gradeList:
+                i.config(bg="#f9b5b5")
+            for i in self.cbList:
+                i.config(bg="#f9b5b5")
+
+        elif self.checkBg == 1:
+            for i in self.courseList:
+                i.config(bg="#bae397")
+            for i in self.gradeList:
+                i.config(bg="#bae397")
+            for i in self.cbList:
+                i.config(bg="#bae397")
+         
+        elif self.checkBg == 2:
+            for i in self.courseList:
+                i.config(bg="#bbf0f2")
+            for i in self.gradeList:
+                i.config(bg="#bbf0f2")
+            for i in self.cbList:
+                i.config(bg="#bbf0f2")
+
+            
+
+        self.newPos += 25
+
+
+    def calculateGPA(self):
+        i = 0
+        j = 0
+        total = 0 # sum of all (grade * 3)
+        checkCheckedBox = 0 # variable to check whether checkbox checked
+        self.convertList = [] # list converted letter to number
+
+        for grades in self.gradeList:
+            grades = self.gradeList[i].get() 
+            self.error = False 
+            if grades == "A+":
+                self.convertList.append(4.33 * 3)
+            elif grades == "A":
+                self.convertList.append(4.0 * 3)
+            elif grades == "A-":
+                self.convertList.append(3.67 * 3)
+            elif grades == "B+":
+                self.convertList.append(3.33 * 3)
+            elif grades == "B":
+                self.convertList.append(3.0 * 3)
+            elif grades == "B-":
+                self.convertList.append(2.67 * 3)
+            elif grades == "C+":
+                self.convertList.append(2.33 * 3)
+            elif grades == "C":
+                self.convertList.append(2.0 * 3)
+            elif grades == "C-":
+                self.convertList.append(1.67 * 3)
+            elif grades == "D":
+                self.convertList.append(1.0 * 3)
+            elif grades == "F":
+                self.convertList.append(0)
+            else:
+                showerror("ERROR", "Wrong Input")
+                self.error = True
+                break
+ 
+
+            i += 1
+        for includes in self.convertList:
+            if self.includeList[j].get():
+                total += self.convertList[j]
+                checkCheckedBox += 1 
+            j += 1
+        finalTotal = format((total / (checkCheckedBox * 3)), ',.2f') # round up 2 decimal points
+        if self.error == False: # if error, shouldn't be displayed
+            showinfo("Result", "GPA : " + finalTotal)
+            
+
+my_gui = MyGUI()
