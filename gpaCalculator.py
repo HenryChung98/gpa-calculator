@@ -9,7 +9,7 @@ class MyGUI:
         self.windowHeight = 220 # variable to resize window height
         self.mainWindow.geometry(f"380x{self.windowHeight}+720+50")
         self.mainWindow.title("GPA Calculator")
-        self.gradeValue = ["", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        self.gradeValue = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
         self.frame1 = Frame(self.mainWindow, width=246, height=30, bg="#d2302c")
         self.frame1.place(x=20, y=30)
         self.frame2Height = 100 # variable to resize frame2 height
