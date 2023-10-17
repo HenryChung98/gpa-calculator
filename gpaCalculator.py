@@ -6,17 +6,18 @@ class MyGUI:
 
     def __init__(self):
         self.mainWindow = Tk()
+        self.windowWidth = 700
         self.windowHeight = 220 # variable to resize window height
-        self.mainWindow.geometry(f"380x{self.windowHeight}+720+50")
+        self.mainWindow.geometry(f"700x{self.windowHeight}+720+50")
         self.mainWindow.title("GPA Calculator")
         self.gradeValue = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
-        self.frame1 = Frame(self.mainWindow, width=246, height=30, bg="#d2302c")
+        self.frame1 = Frame(self.mainWindow, width=520, height=30, bg="#d2302c")
         self.frame1.place(x=20, y=30)
         self.frame2Height = 100 # variable to resize frame2 height
-        self.frame2 = Frame(self.mainWindow, width=246, height=self.frame2Height, bg="#f4a896")
+        self.frame2 = Frame(self.mainWindow, width=520, height=self.frame2Height, bg="#f4a896")
         self.frame2.place(x=20, y=60)
         self.frame3 = Frame(self.mainWindow, width=100, height=180)
-        self.frame3.place(x=266, y=30)
+        self.frame3.place(x=560, y=30)
     
         self.courseLabel = Label(self.frame1, text="Course", font=14, fg="white", bg="#d2302c")
         self.courseLabel.place(x=10, y=5)
@@ -24,7 +25,12 @@ class MyGUI:
         self.gradeLabel.place(x=113, y=5)
         self.includeLabel = Label(self.frame1, text="Included", font=14, fg="white", bg="#d2302c")
         self.includeLabel.place(x=180, y=5)
-        
+        self.courseLabel2 = Label(self.frame1, text="Course", font=14, fg="white", bg="#d2302c")
+        self.courseLabel2.place(x=280, y=5)
+        self.gradeLabel2 = Label(self.frame1, text="Grade", font=14, fg="white", bg="#d2302c")
+        self.gradeLabel2.place(x=383, y=5)
+        self.includeLabel2 = Label(self.frame1, text="Included", font=14, fg="white", bg="#d2302c")
+        self.includeLabel2.place(x=450, y=5)
         
         self.choice=StringVar()
         self.choice.set("RED")
@@ -48,6 +54,17 @@ class MyGUI:
         self.cb = Checkbutton(self.frame2, width=3, variable=self.include, font=14, bg="#f4a896")
         self.cb.place(x=195, y=5)
         
+        '''self.course2 = Entry(self.frame2, width=10, bg="#f4a896", fg="black")
+        self.course2.place(x=280, y=5)
+        self.grade2 = ttk.Combobox(self.frame2, values=self.gradeValue, width=3)
+        self.grade2.place(x=383, y=5)
+        self.grade2.set(self.gradeValue[0])
+        self.include2=IntVar()
+        self.include2.set(1)
+        self.cb2 = Checkbutton(self.frame2, width=3, variable=self.include, font=14, bg="#f4a896")
+        self.cb2.place(x=470, y=5)'''
+        
+        
 
         
         self.addCourseButton = Button(self.frame3, text="Add Course", font=("Arial", 14), width=7, command=self.addCourse)
@@ -61,9 +78,9 @@ class MyGUI:
         self.courseList = [self.course]
         self.cbList = [self.cb]
 
-        self.newPos = 30 # variable to display new inputs
+        self.newPos = 5 # variable to display new inputs
         self.checkBg = 0 # check background color
-        
+        self.courseNum = 1
     def changeBgr(self): # change background red
         self.frame1.config(bg="#d2302c")
         self.frame2.config(bg="#f4a896")
@@ -72,6 +89,9 @@ class MyGUI:
         self.courseLabel.config(bg="#d2302c")
         self.gradeLabel.config(bg="#d2302c")
         self.includeLabel.config(bg="#d2302c")
+        self.courseLabel2.config(bg="#d2302c")
+        self.gradeLabel2.config(bg="#d2302c")
+        self.includeLabel2.config(bg="#d2302c")
         
         
         for i in self.courseList:
@@ -89,7 +109,9 @@ class MyGUI:
         self.courseLabel.config(bg="#17553b")
         self.gradeLabel.config(bg="#17553b")
         self.includeLabel.config(bg="#17553b")
-        
+        self.courseLabel2.config(bg="#17553b")
+        self.gradeLabel2.config(bg="#17553b")
+        self.includeLabel2.config(bg="#17553b")
 
         for i in self.courseList:
             i.config(bg="#ced46a")
@@ -105,7 +127,9 @@ class MyGUI:
         self.courseLabel.config(bg="#1663b2")
         self.gradeLabel.config(bg="#1663b2")
         self.includeLabel.config(bg="#1663b2")
-        
+        self.courseLabel2.config(bg="#1663b2")
+        self.gradeLabel2.config(bg="#1663b2")
+        self.includeLabel2.config(bg="#1663b2")
 
         for i in self.courseList:
             i.config(bg="#9cc3d5")
@@ -115,28 +139,40 @@ class MyGUI:
     
     def addCourse(self):
         # to resize frames
-        self.frame2Height += 25
+        if self.courseNum % 2 == 1:
+            self.frame2Height += 25
+        self.courseNum += 1
         if self.frame2Height >= self.windowHeight - 50:
             self.windowHeight += 25
             self.frame2.config(height=self.frame2Height - 50)
-            self.mainWindow.geometry(f"380x{self.windowHeight + 25}+720+50")
-
-        # add new inputs
-        self.newCourse = Entry(self.frame2, width=10, fg="black")
-        self.newCourse.place(x=10, y=self.newPos)
-        self.courseList.append(self.newCourse)
+            self.mainWindow.geometry(f"700x{self.windowHeight + 25}+720+50")
+            
+            
+        if self.courseNum == 51:
+            showerror("ERROR", "TOO MANY COURSES")
+        else:
+            self.newCourse = Entry(self.frame2, width=10, fg="black")
+            self.courseList.append(self.newCourse)
+            self.newGrade = ttk.Combobox(self.frame2, values=self.gradeValue, width=3)
+            self.newGrade.set(self.gradeValue[0])
+            self.gradeList.append(self.newGrade)
+            self.newInclude=IntVar()
+            self.newInclude.set(1)
+            self.includeList.append(self.newInclude)
+            self.newCb = Checkbutton(self.frame2, width=3, variable=self.newInclude, font=14)
+            self.cbList.append(self.newCb)
         
-        self.newGrade = ttk.Combobox(self.frame2, values=self.gradeValue, width=3)
-        self.newGrade.place(x=113, y=self.newPos)
-        self.newGrade.set(self.gradeValue[0])
-        self.gradeList.append(self.newGrade)
+            if self.courseNum % 2 == 1:
+                self.newCourse.place(x=10, y=self.newPos)
+                self.newGrade.place(x=113, y=self.newPos)
+                self.newCb.place(x=195, y=self.newPos)
+            else:
+                self.newCourse.place(x=280, y=self.newPos)
+                self.newGrade.place(x=383, y=self.newPos)
+                self.newCb.place(x=470, y=self.newPos)
         
-        self.newInclude=IntVar()
-        self.newInclude.set(1)
-        self.includeList.append(self.newInclude)
-        self.newCb = Checkbutton(self.frame2, width=3, variable=self.newInclude, font=14)
-        self.newCb.place(x=195, y=self.newPos)
-        self.cbList.append(self.newCb)
+       
+        
         
         if self.checkBg == 0:
             for i in self.courseList:
@@ -155,10 +191,11 @@ class MyGUI:
                 i.config(bg="#9cc3d5")
             for i in self.cbList:
                 i.config(bg="#9cc3d5")
-
+        
+        if self.courseNum % 2 == 0:
+            self.newPos += 25
+        
             
-
-        self.newPos += 25
 
 
     def calculateGPA(self):
