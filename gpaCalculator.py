@@ -54,15 +54,7 @@ class MyGUI:
         self.cb = Checkbutton(self.frame2, width=3, variable=self.include, font=14, bg="#f4a896")
         self.cb.place(x=195, y=5)
         
-        '''self.course2 = Entry(self.frame2, width=10, bg="#f4a896", fg="black")
-        self.course2.place(x=280, y=5)
-        self.grade2 = ttk.Combobox(self.frame2, values=self.gradeValue, width=3)
-        self.grade2.place(x=383, y=5)
-        self.grade2.set(self.gradeValue[0])
-        self.include2=IntVar()
-        self.include2.set(1)
-        self.cb2 = Checkbutton(self.frame2, width=3, variable=self.include, font=14, bg="#f4a896")
-        self.cb2.place(x=470, y=5)'''
+
         
         
 
@@ -148,7 +140,7 @@ class MyGUI:
             self.mainWindow.geometry(f"700x{self.windowHeight + 25}+720+50")
             
             
-        if self.courseNum == 51:
+        if self.courseNum == 61:
             showerror("ERROR", "TOO MANY COURSES")
         else:
             self.newCourse = Entry(self.frame2, width=10, fg="black")
